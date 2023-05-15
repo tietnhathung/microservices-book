@@ -1,0 +1,4 @@
+rootProject.name = 'voucher-service'
+
+include ':commons-library'
+project(':commons-library').projectDir = new File('../commons-library')
