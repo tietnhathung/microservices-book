@@ -1,6 +1,7 @@
 package com.example.voucherservice.models;
 
 import com.example.commonslibrary.model.Voucher;
+import com.example.commonslibrary.model.VoucherBook;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +25,7 @@ public class VoucherEntity {
     @Column(name = "address", nullable = false)
     private String address;
 
-    @OneToMany(mappedBy="voucherEntity")
+    @OneToMany(mappedBy = "voucherEntity")
     private List<VoucherBookEntity> voucherBookEntities;
 
     public VoucherEntity() {
@@ -36,14 +37,23 @@ public class VoucherEntity {
         address = voucher.getAddress();
     }
 
-    public Voucher toModel(){
+    public Voucher toModel() {
         Voucher voucher = new Voucher();
         voucher.setId(id);
         voucher.setCode(code);
         voucher.setAddress(address);
-        if (voucherBookEntities != null){
-            voucher.setVoucherBooks( voucherBookEntities.stream().map(VoucherBookEntity::toModel).toList() );
+        if (voucherBookEntities != null) {
+            voucher.setVoucherBooks(voucherBookEntities.stream().map(voucherBookEntity -> voucherBookEntity.toModel(null)).toList());
         }
+        return voucher;
+    }
+
+    public Voucher toModel(List<VoucherBook> voucherBooks) {
+        Voucher voucher = new Voucher();
+        voucher.setId(id);
+        voucher.setCode(code);
+        voucher.setAddress(address);
+        voucher.setVoucherBooks(voucherBooks);
         return voucher;
     }
 }

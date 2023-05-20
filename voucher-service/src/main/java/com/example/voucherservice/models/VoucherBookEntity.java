@@ -1,5 +1,6 @@
 package com.example.voucherservice.models;
 
+import com.example.commonslibrary.model.Voucher;
 import com.example.commonslibrary.model.VoucherBook;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -38,6 +39,15 @@ public class VoucherBookEntity {
         VoucherBook voucherBook = new VoucherBook();
         voucherBook.setId(id);
         voucherBook.setVoucher(voucherEntity.toModel());
+        voucherBook.setBookId(bookId);
+        voucherBook.setQuantity(quantity);
+        return voucherBook;
+    }
+
+    public VoucherBook toModel(Voucher voucher){
+        VoucherBook voucherBook = new VoucherBook();
+        voucherBook.setId(id);
+        voucherBook.setVoucher(voucher);
         voucherBook.setBookId(bookId);
         voucherBook.setQuantity(quantity);
         return voucherBook;

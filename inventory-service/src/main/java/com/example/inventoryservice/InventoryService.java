@@ -16,11 +16,6 @@ public class InventoryService {
         this.inventoryRepository = inventoryRepository;
     }
 
-    public Boolean isInStock(Inventory inventory) {
-        Optional<InventoryEntity> inventoryEntity = inventoryRepository.findByBookId(inventory.getBookId());
-        return inventoryEntity.filter(entity -> entity.getQuantity() >= inventory.getQuantity()).isPresent();
-    }
-
     public InventoryEntity findOrNew(UUID bookId){
         Optional<InventoryEntity> inventoryEntityOpt = inventoryRepository.findByBookId(bookId);
         InventoryEntity inventoryEntity;
@@ -32,6 +27,11 @@ public class InventoryService {
             inventoryEntity.setQuantity(0);
         }
         return inventoryEntity;
+    }
+
+    public Boolean isInStock(Inventory inventory) {
+        InventoryEntity inventoryEntity = findOrNew(inventory.getBookId());
+        return inventoryEntity.getQuantity() >= inventory.getQuantity();
     }
 
     public Inventory quantityAdjustment(Inventory inventory) throws Exception {
