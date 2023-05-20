@@ -1,18 +1,27 @@
 package com.example.voucherservice;
 
-import com.example.commonslibrary.clients.BookClient;
-import com.example.commonslibrary.clients.InventoryClient;
-import jakarta.inject.Qualifier;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.commonslibrary.model.Voucher;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/voucher")
 public class VoucherController {
+    private final VoucherService voucherService;
+
+    public VoucherController(VoucherService voucherService) {
+        this.voucherService = voucherService;
+    }
 
     @GetMapping
-    public String get(){
-        return "voucher service";
+    public List<Voucher> get(){
+        return voucherService.get();
     }
+
+    @PostMapping
+    public Voucher create(@RequestBody Voucher voucher) throws Exception {
+        return voucherService.create(voucher);
+    }
+
 }

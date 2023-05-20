@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @EnableDiscoveryClient
 @SpringBootApplication
+@ComponentScan({"com.example.voucherservice","com.example.commonslibrary"})
 @EnableFeignClients(basePackages = {"com.example.commonslibrary.clients"})
 public class VoucherServiceApplication {
 

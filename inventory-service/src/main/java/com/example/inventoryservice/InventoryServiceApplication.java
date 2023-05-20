@@ -3,9 +3,11 @@ package com.example.inventoryservice;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.ComponentScan;
 
 @EnableDiscoveryClient
 @SpringBootApplication
+@ComponentScan({"com.example.inventoryservice","com.example.commonslibrary"})
 public class InventoryServiceApplication {
 
     public static void main(String[] args) {
