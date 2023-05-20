@@ -1,7 +1,10 @@
-package com.example.bookservice.models;
+package com.example.bookservice.dao;
 
+import com.example.commonslibrary.model.Book;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.UUID;
@@ -9,7 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "book_entity")
+@Table(name = "book")
 public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -21,4 +24,15 @@ public class BookEntity {
 
     @Column(name = "author", nullable = false)
     private String author;
+
+    public BookEntity() {
+    }
+    public BookEntity(Book book) {
+        id = book.getId();
+        name = book.getName();
+        author = book.getAuthor();
+    }
+    public Book toModel(){
+        return new Book(id,name,author);
+    }
 }
