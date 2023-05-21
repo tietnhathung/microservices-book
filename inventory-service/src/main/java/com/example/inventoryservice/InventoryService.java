@@ -4,9 +4,9 @@ import com.example.commonslibrary.model.Inventory;
 import com.example.commonslibrary.utils.LockByKey;
 import com.example.inventoryservice.dao.InventoryEntity;
 import com.example.inventoryservice.dao.InventoryRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -38,7 +38,7 @@ public class InventoryService {
         return inventoryEntity.getQuantity() >= inventory.getQuantity();
     }
 
-    @Transactional
+
     public Inventory quantityAdjustment(Inventory inventory) throws Exception {
         lockByKey.lock(inventory.getBookId().toString());
         InventoryEntity inventoryEntity = findOrNew(inventory.getBookId());
@@ -50,5 +50,10 @@ public class InventoryService {
         inventoryRepository.save(inventoryEntity);
         lockByKey.unlock(inventory.getBookId().toString());
         return inventoryEntity.toModel();
+    }
+
+    public List<Inventory> all() {
+        List<InventoryEntity> inventoryEntities = inventoryRepository.findAll();
+        return inventoryEntities.stream().map(InventoryEntity::toModel).toList();
     }
 }

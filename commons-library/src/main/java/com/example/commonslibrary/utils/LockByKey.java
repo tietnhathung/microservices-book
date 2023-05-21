@@ -18,6 +18,6 @@ public class LockByKey {
 
     public synchronized void unlock(String key) {
         lockKeys.remove(key);
-        notify();
+        notifyAll();
     }
 }
